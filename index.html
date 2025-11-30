@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Goofy English Worksheet — Live Form</title>
+<style>
+  :root{
+    --accent:#6a1b9a;
+    --muted:#6b6b6b;
+  }
+  body{font-family: Inter, Arial, sans-serif; background: linear-gradient(180deg,#f7f0fb 0%,#fff 40%); margin:0; color:#222;}
+  .header{background:var(--accent); color:#fff; padding:24px 20px; font-size:20px; font-weight:700;}
+  .container{max-width:900px; margin:28px auto; background:#fff; border-radius:12px; box-shadow:0 12px 30px rgba(0,0,0,0.08); padding:24px;}
+  h1{margin:0 0 8px 0; font-size:22px;}
+  .small{color:var(--muted); font-size:13px;}
+  .section{margin-top:18px;}
+  .q{margin:14px 0; padding:12px; border-radius:10px; background:linear-gradient(180deg,#fff,#fbf8ff);}
+  label.qtitle{display:block; font-weight:600; margin-bottom:8px;}
+  input[type="text"], textarea{width:100%; padding:10px; border:1px solid #eee; border-radius:8px; font-size:15px; box-sizing:border-box;}
+  .mcq, .checkboxes {display:flex; flex-direction:column; gap:8px;}
+  .opt{display:flex; gap:10px; align-items:center;}
+  .opt input[type="radio"], .opt input[type="checkbox"]{width:16px; height:16px;}
+  .submit-row{display:flex; gap:12px; align-items:center; margin-top:18px;}
+  button.primary{background:var(--accent); color:white; border:none; padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(106,27,154,0.18);}
+  button.ghost{background:transparent; border:1px solid #ddd; padding:10px 14px; border-radius:10px; cursor:pointer;}
+  .status{margin-left:10px; color:var(--muted);}
+  .thanks{display:none; text-align:center; padding:30px 10px;}
+  /* goofy animations */
+  .wiggle{display:inline-block; transform-origin:center; animation:wig 2s infinite;}
+  @keyframes wig{0%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}100%{transform:rotate(-6deg)}}
+  .floating{animation: floaty 4s ease-in-out infinite;}
+  @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+  .confetti{position:fixed; left:0; right:0; top:0; bottom:0; pointer-events:none; display:none;}
+  .confetti .piece{position:absolute; width:10px; height:14px; opacity:0.95; border-radius:2px}
+  footer{margin-top:26px; color:var(--muted); font-size:13px; text-align:center;}
+</style>
+</head>
+<body>
+  <div class="header">📝 Goofy English Worksheet — Tenses & Descriptive Text</div>
+
+  <div class="container" id="formWrap">
+    <h1>Fill the blanks — be goofy, be correct</h1>
+    <div class="small">Submissions go to your linked Google Sheet. Press Submit when done.</div>
+
+    <!-- Form starts -->
+    <form id="goofyForm">
+      <!-- TEXT question example -->
+      <div class="section">
+        <div class="q">
+          <label class="qtitle">1. There are <strong>___</strong> tenses.</label>
+          <input name="q1" type="text" placeholder="e.g., 3" required>
+        </div>
+
+        <div class="q">
+          <label class="qtitle">2. Present tense talks about <strong>___</strong>.</label>
+          <input name="q2" type="text" placeholder="e.g., now" required>
+        </div>
+
+        <!-- Multiple choice example -->
+        <div class="q">
+          <label class="qtitle">3. Which tense tells about the past?</label>
+          <div class="mcq">
+            <label class="opt"><input type="radio" name="q3" value="Present" required> Present</label>
+            <label class="opt"><input type="radio" name="q3" value="Past"> Past</label>
+            <label class="opt"><input type="radio" name="q3" value="Future"> Future</label>
+          </div>
+        </div>
+
+        <!-- Checkboxes example -->
+        <div class="q">
+          <label class="qtitle">4. Pick examples of verbs (choose all that apply)</label>
+          <div class="checkboxes">
+            <label class="opt"><input type="checkbox" name="q4" value="run"> run</label>
+            <label class="opt"><input type="checkbox" name="q4" value="pizza"> pizza</label>
+            <label class="opt"><input type="checkbox" name="q4" value="sing"> sing</label>
+          </div>
+        </div>
+
+        <!-- Large text -->
+        <div class="q">
+          <label class="qtitle">5. Describe any animal in one short sentence.</label>
+          <textarea name="q5" rows="2" placeholder="e.g., The cat is small and cute."></textarea>
+        </div>
+
+        <!-- Many short inputs, dynamic rendering of merged questions -->
+        <div class="q" id="miniGrid">
+          <label class="qtitle">6–10. Quick blanks (comma separated answers allowed)</label>
+          <input name="q6" type="text" placeholder="6. Is 'run' a verb?">
+          <input name="q7" type="text" placeholder="7. Present Perfect uses has/have + ___">
+          <input name="q8" type="text" placeholder="8. Verb 3 of 'run'">
+          <input name="q9" type="text" placeholder="9. Name one subject (I/you/etc.)">
+          <input name="q10" type="text" placeholder="10. 'I have ___ my homework.'">
+        </div>
+
+      </div>
+
+      <!-- Section: Person & Animal -->
+      <div class="section">
+        <div class="q">
+          <label class="qtitle">11. Describing a person is called <strong>___</strong> text.</label>
+          <input name="q11" type="text">
+        </div>
+
+        <div class="q">
+          <label class="qtitle">12. The first part is called (Identification / Description)</label>
+          <select name="q12">
+            <option value="">-- choose --</option>
+            <option value="Identification">Identification</option>
+            <option value="Description">Description</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <label class="qtitle">13. A cat says <strong>___</strong>.</label>
+          <input name="q13" type="text" placeholder="meow">
+        </div>
+      </div>
+
+      <!-- Bonus silly -->
+      <div class="section">
+        <div class="q">
+          <label class="qtitle">14. A giraffe's neck is <strong>___</strong>.</label>
+          <input name="q14" type="text" placeholder="long">
+        </div>
+
+        <div class="q">
+          <label class="qtitle">15. Pick any adjectives that describe a person (multiple)</label>
+          <div class="checkboxes">
+            <label class="opt"><input type="checkbox" name="q15" value="kind"> kind</label>
+            <label class="opt"><input type="checkbox" name="q15" value="funny"> funny</label>
+            <label class="opt"><input type="checkbox" name="q15" value="smart"> smart</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button class="primary" type="submit" id="submitBtn">Submit answers</button>
+        <button type="button" class="ghost" id="clearBtn">Clear form</button>
+        <div class="status" id="statusText">Not submitted</div>
+      </div>
+    </form>
+
+    <div class="thanks" id="thanksBox">
+      <h2 class="wiggle">Thanks! Submission received 🎉</h2>
+      <p class="small">Your answers have been saved. You're a legend.</p>
+      <button class="primary" id="anotherBtn">Submit another</button>
+    </div>
+    <footer>Built with ✨ by your goofy bot — host anywhere</footer>
+  </div>
+
+  <div class="confetti" id="confetti"></div>
+
+<script>
+/* ========== CONFIG: Paste your Apps Script web app URL here ========== */
+const APPS_SCRIPT_URL = "<PASTE_YOUR_DEPLOYED_APPS_SCRIPT_URL_HERE>";
+/* =================================================================== */
+
+/* Sounds via WebAudio (no external files) */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playBeep(freq=440, dur=0.08, vol=0.05){
+  let o = audioCtx.createOscillator();
+  let g = audioCtx.createGain();
+  o.type='sine'; o.frequency.value = freq;
+  g.gain.value = vol;
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(); o.stop(audioCtx.currentTime + dur);
+}
+
+/* Confetti simple generator */
+function burstConfetti(){
+  const wrap = document.getElementById('confetti');
+  wrap.innerHTML = '';
+  wrap.style.display = 'block';
+  for(let i=0;i<40;i++){
+    const d = document.createElement('div');
+    d.className='piece';
+    d.style.left = Math.random()*100 + '%';
+    d.style.top  = Math.random()*20 + '%';
+    d.style.background = ['#ff6b6b','#ffd93d','#6bcB77','#4d7cff','#b46aff'][Math.floor(Math.random()*5)];
+    d.style.transform = `rotate(${Math.random()*360}deg)`;
+    d.style.opacity = Math.random()*0.9+0.1;
+    wrap.appendChild(d);
+  }
+  setTimeout(()=>wrap.style.display='none',2200);
+}
+
+/* Helpers: collect form data, including multiple checkboxes */
+function gatherFormData(form){
+  const data = {};
+  const fd = new FormData(form);
+  // For checkboxes with same name, we will join values with " | "
+  // But FormData will already include multiple entries; we'll combine manually:
+  const keys = Array.from(new Set(Array.from(fd.keys())));
+  keys.forEach(k=>{
+    const vals = fd.getAll(k);
+    data[k] = vals.length > 1 ? vals.join(' | ') : (vals[0] || '');
+  });
+  // also timestamp and user agent
+  data._timestamp = new Date().toISOString();
+  data._ua = navigator.userAgent;
+  return data;
+}
+
+/* UI wiring */
+const form = document.getElementById('goofyForm');
+const submitBtn = document.getElementById('submitBtn');
+const statusText = document.getElementById('statusText');
+const thanks = document.getElementById('thanksBox');
+const wrap = document.getElementById('formWrap');
+
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  form.reset(); playBeep(520,0.06,0.03);
+});
+
+document.getElementById('anotherBtn').addEventListener('click', ()=>{
+  thanks.style.display='none';
+  form.style.display='block';
+  document.getElementById('statusText').textContent='Not submitted';
+  form.reset();
+});
+
+form.addEventListener('submit', async (ev)=>{
+  ev.preventDefault();
+  playBeep(780,0.06,0.04);
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+  statusText.textContent = 'Sending…';
+
+  const payload = gatherFormData(form);
+  try{
+    // POST to Apps Script
+    const resp = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const j = await resp.json();
+    if(resp.ok && j.result === 'success'){
+      statusText.textContent = 'Saved ✓';
+      playBeep(1000,0.06,0.06);
+      burstConfetti();
+      form.style.display='none';
+      thanks.style.display='block';
+    } else {
+      statusText.textContent = 'Error: ' + (j.error || 'unknown');
+      playBeep(240,0.12,0.06);
+      alert('Save failed: ' + (j.error || 'unknown'));
+    }
+  }catch(err){
+    statusText.textContent = 'Network error';
+    playBeep(200,0.12,0.06);
+    alert('Network error: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit answers';
+  }
+});
+</script>
+</body>
+</html>
